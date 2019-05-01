@@ -1,5 +1,6 @@
 /* eslint-disable linebreak-style */
-import recipesRequest from '../../api';
+import firebase from 'firebase';
+import { recipesRequest } from '../../api';
 // initial state
 const state = {
   recipes: [],
@@ -7,7 +8,7 @@ const state = {
 };
 
 const getters = {
-  getRecipes(state) {
+  getRecipes() {
     return state.recipes;
   },
 };
@@ -23,6 +24,13 @@ const actions = {
     recipesRequest(`${state.apiUrl}`, plan).then((response) => {
       commit('setRecipes', response);
     });
+  },
+  addRecipe({ state }, payload) {
+    firebase
+      .database()
+      .ref('users')
+      .child(state.user.user.uid)
+      .push(payload.recipe.label);
   },
 };
 

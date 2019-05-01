@@ -5,7 +5,7 @@ import firebase from 'firebase';
 
 const axios = require('axios');
 
-const recipesRequest = async (url, plan) => {
+export const recipesRequest = async (url, plan) => {
   try {
     const response = await axios.get(url, {
       params: {
@@ -22,15 +22,23 @@ const recipesRequest = async (url, plan) => {
   }
 };
 
-const userJoinAuth = (email, password) => {
+// TODO
+
+export function userJoinAuth(email, password) {
   firebase
     .auth()
     .createUserWithEmailAndPassword(email, password)
+    .then((user) => {
+      const data = { user, authenticated: true };
+      return data;
+    })
+    .catch(() => ({ user: null, authenticated: false }));
+}
+
+export function userSignIn(email, password) {
+  firebase
+    .auth()
+    .signInWithEmailAndPassword(email, password)
     .then(user => ({ user, authenticated: true }))
     .catch(() => ({ user: null, authenticated: false }));
-};
-
-export default {
-  recipesRequest,
-  userJoinAuth,
-};
+}
