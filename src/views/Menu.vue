@@ -13,8 +13,8 @@ export default {
   name: 'Menu',
   components: {
     HomePlans,
-    MealRecipes
-  }
+    MealRecipes,
+  },
 };
 </script>
 

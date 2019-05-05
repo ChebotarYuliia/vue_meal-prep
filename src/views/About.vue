@@ -13,23 +13,23 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
+import { mapGetters, mapActions } from 'vuex';
 
 export default {
-    name: 'About',
-    computed: {
-      ...mapGetters('user',{
-        userRecipes: 'getUserRecipes'
-      }),
-    },
-    mounted() {
-      getRecipes()
-    },
-    methods: {
-      ...mapActions('user', {
-        getRecipes: 'getUserRecipes'
-      }),
-    }
+  name: 'About',
+  computed: {
+    ...mapGetters('user', {
+      userRecipes: 'getUserRecipes',
+    }),
+  },
+  mounted() {
+    getRecipes();
+  },
+  methods: {
+    ...mapActions('user', {
+      getRecipes: 'getUserRecipes',
+    }),
+  },
 };
 </script>
 

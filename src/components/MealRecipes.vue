@@ -25,30 +25,30 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
+import { mapGetters, mapActions } from 'vuex';
 import router from '@/router';
 
 export default {
   name: 'MealRecipes',
-   computed: {
-    ...mapGetters('recipes',{
+  computed: {
+    ...mapGetters('recipes', {
       recipes: 'getRecipes',
     }),
-    ...mapGetters('user',{
-      isAuthenticated: 'getIsAuthenticated'
-    })
+    ...mapGetters('user', {
+      isAuthenticated: 'getIsAuthenticated',
+    }),
   },
   methods: {
     ...mapActions('recipes', {
-      addRecipe: 'addRecipe'
+      addRecipe: 'addRecipe',
     }),
-    orderRecipe(item){
-      if(this.isAuthenticated){
-        addRecipe(item)
-      } else{
+    orderRecipe(item) {
+      if (this.isAuthenticated) {
+        this.addRecipe(item);
+      } else {
         this.$router.push('/sign-in');
       }
-    }
-  }
+    },
+  },
 };
 </script>

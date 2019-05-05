@@ -1,7 +1,10 @@
 /* eslint-disable linebreak-style */
+/* eslint-disable import/no-cycle */
+/* eslint-disable no-param-reassign */
+/* eslint no-shadow: ["error", { "allow": ["state"] }] */
 import firebase from 'firebase';
-// import { userJoinAuth } from '../../api';
 import router from '@/router';
+import { SET_USER, SET_IS_AUTHENTICATED, SET_USER_RECIPES } from '../mutation-types';
 
 const state = {
   user: null,
@@ -10,22 +13,18 @@ const state = {
 };
 
 const getters = {
-  getIsAuthenticated(state) {
-    return state.user !== null && state.user !== undefined;
-  },
-  getUserRecipes(state) {
-    return state.userRecipes;
-  },
+  getIsAuthenticated: state => state.user !== null && state.user !== undefined,
+  getUserRecipes: state => state.userRecipes,
 };
 
 const mutations = {
-  setUser(state, payload) {
+  [SET_USER](state, payload) {
     state.user = payload;
   },
-  setIsAuthenticated(state, payload) {
+  [SET_IS_AUTHENTICATED](state, payload) {
     state.isAuthenticated = payload;
   },
-  setUserRecipes(state, payload) {
+  [SET_USER_RECIPES](state, payload) {
     state.userRecipes = payload;
   },
 };
@@ -36,13 +35,13 @@ const actions = {
       .auth()
       .createUserWithEmailAndPassword(email, password)
       .then((user) => {
-        commit('setUser', user);
-        commit('setIsAuthenticated', true);
+        commit('SET_USER', user);
+        commit('SET_IS_AUTHENTICATED', true);
         router.push('/about');
       })
       .catch(() => {
-        commit('setUser', null);
-        commit('setIsAuthenticated', false);
+        commit('SET_USER', null);
+        commit('SET_IS_AUTHENTICATED', false);
       });
   },
   userLogin({ commit }, { email, password }) {
@@ -50,13 +49,13 @@ const actions = {
       .auth()
       .signInWithEmailAndPassword(email, password)
       .then((user) => {
-        commit('setUser', user);
-        commit('setIsAuthenticated', true);
+        commit('SET_USER', user);
+        commit('SET_IS_AUTHENTICATED', true);
         router.push('/about');
       })
       .catch(() => {
-        commit('setUser', null);
-        commit('setIsAuthenticated', false);
+        commit('SET_USER', null);
+        commit('SET_IS_AUTHENTICATED', false);
       });
   },
   userSignOut({ commit }) {
@@ -64,13 +63,13 @@ const actions = {
       .auth()
       .signOut()
       .then(() => {
-        commit('setUser', null);
-        commit('setIsAuthenticated', false);
+        commit('SET_USER', null);
+        commit('SET_IS_AUTHENTICATED', false);
         router.push('/');
       })
       .catch(() => {
-        commit('setUser', null);
-        commit('setIsAuthenticated', false);
+        commit('SET_USER', null);
+        commit('SET_IS_AUTHENTICATED', false);
         router.push('/');
       });
   },
@@ -79,7 +78,7 @@ const actions = {
       .database()
       .ref(`users/${state.user.user.uid}`)
       .once('value', (snapshot) => {
-        commit('setUserRecipes', snapshot.val());
+        commit('SET_USER_RECIPES', snapshot.val());
       });
   },
 };

@@ -38,14 +38,13 @@ export default {
       password: '',
       emailRules: [
         v => !!v || 'E-mail is required',
-        v => /.+@.+/.test(v) || 'E-mail must be valid'
+        v => /.+@.+/.test(v) || 'E-mail must be valid',
       ],
       passwordRules: [
         v => !!v || 'Password is required',
-        v =>
-          v.length >= 6 ||
-          'Password must be greater than 6 characters'
-      ]
+        v => v.length >= 6
+          || 'Password must be greater than 6 characters',
+      ],
     };
   },
   methods: {
@@ -56,14 +55,13 @@ export default {
       if (this.$refs.form.validate()) {
         this.userLogin({
           email: this.email,
-          password: this.password
-        })
+          password: this.password,
+        });
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
 <style scoped>
 </style>
-

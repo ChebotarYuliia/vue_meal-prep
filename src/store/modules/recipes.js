@@ -1,6 +1,10 @@
 /* eslint-disable linebreak-style */
+/* eslint-disable no-param-reassign */
+/* eslint-disable no-shadow */
 import firebase from 'firebase';
 import { recipesRequest } from '../../api';
+import { SET_RECIPES } from '../mutation-types';
+
 // initial state
 const state = {
   recipes: [],
@@ -14,7 +18,7 @@ const getters = {
 };
 
 const mutations = {
-  setRecipes(state, payload) {
+  [SET_RECIPES](state, payload) {
     state.recipes = payload;
   },
 };
@@ -22,10 +26,10 @@ const mutations = {
 const actions = {
   queryRecipes({ commit }, plan) {
     recipesRequest(`${state.apiUrl}`, plan).then((response) => {
-      commit('setRecipes', response);
+      commit('SET_RECIPES', response);
     });
   },
-  addRecipe({ state }, payload) {
+  addRecipe(payload) {
     firebase
       .database()
       .ref('users')
