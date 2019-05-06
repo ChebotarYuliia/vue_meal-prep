@@ -10,6 +10,7 @@ const state = {
   user: null,
   isAuthenticated: false,
   userRecipes: [],
+  recipes: [],
 };
 
 const getters = {
@@ -73,13 +74,20 @@ const actions = {
         router.push('/');
       });
   },
-  getUserRecipes({ state, commit }) {
+  userRecipes({ state, commit }) {
     return firebase
       .database()
       .ref(`users/${state.user.user.uid}`)
       .once('value', (snapshot) => {
         commit('SET_USER_RECIPES', snapshot.val());
       });
+  },
+  addRecipe(payload) {
+    firebase
+      .database()
+      .ref('users')
+      .child(state.user.user.uid)
+      .push(payload.recipe.label);
   },
 };
 

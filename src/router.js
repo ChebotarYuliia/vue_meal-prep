@@ -42,7 +42,7 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.authRequired)) {
-    if (!store.getters.isAuthenticated) {
+    if (!store.getters['user/getIsAuthenticated']) {
       next({
         path: '/sign-in',
       });

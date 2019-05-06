@@ -23,11 +23,11 @@ export default {
     }),
   },
   mounted() {
-    getRecipes();
+    this.getRecipes();
   },
   methods: {
     ...mapActions('user', {
-      getRecipes: 'getUserRecipes',
+      getRecipes: 'userRecipes',
     }),
   },
 };

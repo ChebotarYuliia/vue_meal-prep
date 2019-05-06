@@ -39,7 +39,7 @@ export default {
     }),
   },
   methods: {
-    ...mapActions('recipes', {
+    ...mapActions('user', {
       addRecipe: 'addRecipe',
     }),
     orderRecipe(item) {
