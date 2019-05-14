@@ -1,12 +1,13 @@
 /* eslint-disable linebreak-style */
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-shadow */
-import { recipesRequest } from '../../api';
+import recipesRequest from '../../api';
 import { SET_RECIPES } from '../mutation-types';
 
 // initial state
 const state = {
   apiUrl: 'https://api.edamam.com/search',
+  recipes: [],
 };
 
 const getters = {
