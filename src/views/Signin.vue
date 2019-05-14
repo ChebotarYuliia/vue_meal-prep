@@ -6,6 +6,9 @@
           <v-toolbar color="brown lighten-4">
             <v-toolbar-title>Login Form</v-toolbar-title>
           </v-toolbar>
+          <div v-if="formError">
+            'Email or password is wrong'
+          </div>
           <v-card-text>
             <v-form ref="form" v-model="valid" lazy-validation>
               <v-text-field prepend-icon="person" name="email" label="Email" type="email"
@@ -36,6 +39,7 @@ export default {
       valid: false,
       email: '',
       password: '',
+      formError: false,
       emailRules: [
         v => !!v || 'E-mail is required',
         v => /.+@.+/.test(v) || 'E-mail must be valid',
@@ -57,6 +61,8 @@ export default {
           email: this.email,
           password: this.password,
         });
+      } else {
+        this.formError = true;
       }
     },
   },

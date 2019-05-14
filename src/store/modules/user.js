@@ -77,7 +77,7 @@ const actions = {
   userRecipes({ state, commit }) {
     return firebase
       .database()
-      .ref(`users/${state.user.user.uid}`)
+      .ref(`/users/${state.user.user.uid}`)
       .once('value', (snapshot) => {
         commit('SET_USER_RECIPES', snapshot.val());
       });
